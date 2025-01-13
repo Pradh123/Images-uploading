@@ -7,7 +7,7 @@ const Card = ({ image, title, rating, author }) => {
         <h2 className="card-title">{title}</h2>
         <p className="card-author">By {author}</p>
         <div className="card-rating">
-          <span>⭐ {rating}</span>
+          <span>{rating}</span>
         </div>
       </div>
     </div>
