@@ -13,6 +13,56 @@
     --foreground: #ededed;
   }
 }
+/* Card Container */
+.card {
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Image */
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Card Content */
+.card-content {
+  padding: 15px;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
+}
+
+/* Card Author */
+.card-author {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* Card Rating */
+.card-rating {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ff9800;
+}
+
 
 body {
   color: var(--foreground);

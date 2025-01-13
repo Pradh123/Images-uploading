@@ -1,114 +1,149 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import Card from '@/Components/Card';
+import { useState } from 'react';
+export default function UploadForm() {
+    const cardData = {
+      image: "https://via.placeholder.com/300x180",
+      title: "The Art of React",
+      rating: "4.5",
+      author: "Jane Doe",
+    };
+      const [formData1, setFormData1] = useState({
+        name: "",
+        age: "",
+        title: "",
+        image: null,
+      });
+      const [message, setMessage] = useState("");
+      const [uploadedFilePath, setUploadedFilePath] = useState("");
+    
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData1({ ...formData1, [name]: value });
+      };
+    
+      const handleFileChange = (e) => {
+        setFormData1({ ...formData1, image: e.target.files[0] });
+      };
+    
+      
+    
+  
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+        if (!formData1.image) {
+            setMessage('Please select a file to upload.');
+            return;
+        }
 
-export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+        const formData = new FormData();
+        formData.append('image', formData1.image);
+        formData.append("name",formData1.name),
+        formData.append("age",formData1.age)
+        formData.append("tilte",formData1.title)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+
+
+        try {
+            const response = await fetch('http://localhost:5000/images/upload',{
+              method:"POST",
+               body: formData,
+            });
+console.log("response --> ".response)
+            setMessage(response.message);
+            setUploadedFilePath(response.filePath);
+        } catch (error) {
+            setMessage('Error uploading file. Please try again.');
+        }
+    };
+
+    return (<>
+        <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Image Upload Form</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Name */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={formData1.name}
+            onChange={handleInputChange}
+            placeholder="Enter your name"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+
+        {/* Age */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Age</label>
+          <input
+            type="number"
+            name="age"
+            value={formData1.age}
+            onChange={handleInputChange}
+            placeholder="Enter your age"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+        </div>
+
+        {/* Title */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <input
+            type="text"
+            name="title"
+            value={formData1.title}
+            onChange={handleInputChange}
+            placeholder="Enter a title"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+        </div>
+
+        {/* Image */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Upload
+        </button>
+      </form>
+
+      {message && (
+        <p className="mt-4 text-center text-green-600 font-medium">{message}</p>
+      )}
+
+      {uploadedFilePath && (
+        <div className="mt-6 text-center">
+          <p className="text-gray-700 font-medium">Uploaded Image:</p>
+          <img
+            src={`http://localhost:5000${uploadedFilePath}`}
+            alt="Uploaded"
+            className="mt-2 mx-auto max-w-full rounded-md shadow"
+          />
+        </div>
+      )}
     </div>
-  );
-}
+        <div className='flex flex-wrap gap-3 mx-3 my-16'>
+      <Card
+        image={cardData.image}
+        title={cardData.title}
+        rating={cardData.rating}
+        author={cardData.author}
+      />
+    </div>
+    </>
+    );
+  }
