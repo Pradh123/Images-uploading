@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"next dev\" \"nodemon server.js\"",
-    "build": "concurrently \"next build\" \"nodemon server.js\"",
-    "start": "concurrently \"next start\" \"nodemon server.js\"",
+    "dev": "concurrently \"next dev\" \"node server.js\"",
+    "build": "concurrently \"next build\" \"node server.js\"",
+    "start": "concurrently \"next start\" \"node server.js\"",
     "lint": "next lint"
   },
   "dependencies": {
