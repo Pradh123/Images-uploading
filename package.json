@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  
   "scripts": {
-    "dev": "concurrently \"next dev\" \"node server.js\"",
-    "build": "concurrently \"next build\" \"node server.js\"",
-    "start": "concurrently \"next start\" \"node server.js\"",
-    "lint": "next lint"
+    "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint"
   },
+  
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
