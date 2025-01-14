@@ -12,8 +12,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 
 // Use image upload routes
-app.use('/images', router);
-app.get("/login",(req,res)=>{
+app.use('/user/images', router);
+app.get("/user/login",(req,res)=>{
     res.send("very nice")
 })
 // Start the server
