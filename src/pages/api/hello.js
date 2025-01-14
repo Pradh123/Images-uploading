@@ -1,27 +1,20 @@
 // api/hello.js
-
 import express from 'express';
 import http from 'http'
+import cors from 'cors';
+import dotenv from 'dotenv';
+import router from '../../../routes/imageUpload';
 const app = express();
-
-// Middleware to handle JSON payloads
+dotenv.config();
 app.use(express.json());
-
+app.use(cors());
 // Sample GET route
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from Express on Vercel!' });
-});
-
-// Sample POST route
-app.post('/api/data', (req, res) => {
-  const { name } = req.body;
-  res.json({ message: `Hello, ${name}!` });
-});
-
-// Export the Express app as a serverless function
+app.use('/images', router);
+app.get("/login",(req,res)=>{
+    res.send("very nice")
+})
 const servermodule= (req, res) => {
   const server = http.createServer(app);
   server.emit('request', req, res);
 };
-
 export default servermodule
