@@ -13,8 +13,11 @@ app.use(cors());
 
 // Use image upload routes
 app.use('/images', imageUploadRoutes);
-
+app.get("/login",(req,res)=>{
+    res.send("very nice")
+})
 // Start the server
+export default app
 // app.listen(port, () => {
 //   console.log(`Server running on http://localhost:${port}`);
 // });
