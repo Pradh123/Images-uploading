@@ -9,8 +9,8 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 // Sample GET route
-app.use('/images', router);
-app.get("/login",(req,res)=>{
+app.use('/api/images', router);
+app.get("/api/login",(req,res)=>{
     res.send("very nice")
 })
 const servermodule= (req, res) => {
