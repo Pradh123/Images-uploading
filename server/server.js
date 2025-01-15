@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import http from 'http'
 import router from '../routes/imageUpload.js';
 dotenv.config();
 
@@ -12,13 +11,11 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 
 // Use image upload routes
-app.use('/user/images', router);
-app.get("/user/login",(req,res)=>{
+app.use('/images', router);
+app.get("/login",(req,res)=>{
     res.send("very nice")
 })
-// Start the server
-const servermodule= (req, res) => {
-  const server = http.createServer(app);
-  server.emit('request', req, res);
-};
-export default servermodule
+
+app.listen(5000,()=>{
+  console.log(`server is running on port ${5000||port}`)
+})
