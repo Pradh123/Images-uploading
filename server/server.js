@@ -16,6 +16,7 @@ app.get("/login",(req,res)=>{
     res.send("very nice")
 })
 
-app.listen(5000,()=>{
-  console.log(`server is running on port ${5000||port}`)
-})
+// app.listen(5000,()=>{
+//   console.log(`server is running on port ${5000||port}`)
+// })
+export default app
